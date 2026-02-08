@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Impact | EKOTEK Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">EKOTEK</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <div class="nav-control">
+                <i class="fas fa-map-marker-alt"></i>
+                <select class="nav-select">
+                    <option value="all">All Locations (12)</option>
+                </select>
+            </div>
+            <div class="nav-control">
+                <i class="fas fa-calendar-alt"></i>
+                <select class="nav-select">
+                    <option value="30d" selected>Last 30 Days</option>
+                </select>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">3</span></button>
+            <button class="nav-icon-btn"><i class="fas fa-question-circle"></i></button>
+            <button class="nav-icon-btn"><i class="fas fa-cog"></i></button>
+            <div class="user-menu">
+                <div class="user-avatar">JS</div>
+                <span class="user-name">John Smith</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <h3 class="sidebar-heading">Menu</h3>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Executive Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="food-waste-analytics.html" class="nav-link">
+                            <i class="fas fa-utensils"></i>
+                            <span>Food Waste Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="recycling-compliance.html" class="nav-link">
+                            <i class="fas fa-recycle"></i>
+                            <span>Recycling & Compliance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="financial-impact.html" class="nav-link">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Financial Impact</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="predictions-ai.html" class="nav-link">
+                            <i class="fas fa-magic"></i>
+                            <span>Predictions & AI</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="settings.html" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="padding: var(--space-6); text-align: center;">
+                <i class="fas fa-dollar-sign" style="font-size: 4rem; color: var(--warning); margin-bottom: var(--space-4);"></i>
+                <h1 style="font-size: var(--font-size-3xl); margin-bottom: var(--space-4); color: var(--text-primary);">Financial Impact Analysis</h1>
+                <p style="font-size: var(--font-size-lg); color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                    Track waste costs, identify savings opportunities, and measure ROI on waste reduction initiatives.
+                </p>
+                
+                <div style="margin-top: var(--space-12); display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6);">
+                    <div class="card" style="padding: var(--space-8);">
+                        <i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--success); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2);">Cost Savings</h3>
+                        <div style="font-size: var(--font-size-2xl); font-weight: bold; color: var(--success); margin: var(--space-4) 0;">$42,680</div>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">Saved this quarter</p>
+                    </div>
+                    <div class="card" style="padding: var(--space-8);">
+                        <i class="fas fa-money-bill-trend-up" style="font-size: 2.5rem; color: var(--warning); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2);">Current Waste Cost</h3>
+                        <div style="font-size: var(--font-size-2xl); font-weight: bold; color: var(--text-primary); margin: var(--space-4) 0;">$18,240</div>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">This month</p>
+                    </div>
+                    <div class="card" style="padding: var(--space-8);">
+                        <i class="fas fa-piggy-bank" style="font-size: 2.5rem; color: var(--info); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2);">Potential Savings</h3>
+                        <div style="font-size: var(--font-size-2xl); font-weight: bold; color: var(--info); margin: var(--space-4) 0;">$8,450</div>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">Next month forecast</p>
+                    </div>
+                    <div class="card" style="padding: var(--space-8);">
+                        <i class="fas fa-percentage" style="font-size: 2.5rem; color: var(--primary); margin-bottom: var(--space-4);"></i>
+                        <h3 style="margin-bottom: var(--space-2);">ROI</h3>
+                        <div style="font-size: var(--font-size-2xl); font-weight: bold; color: var(--success); margin: var(--space-4) 0;">285%</div>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">On waste reduction program</p>
+                    </div>
+                </div>
+
+                <div class="success-message" style="margin-top: var(--space-12); max-width: 700px; margin-left: auto; margin-right: auto;">
+                    <i class="fas fa-trophy"></i>
+                    <span><strong>Achievement Unlocked:</strong> Your waste reduction efforts have saved $42,680 this quarter, exceeding your target by 15%!</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

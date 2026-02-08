@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EKOTEK - AI-Powered Restaurant Waste Analytics Platform">
+    <title>EKOTEK Dashboard | Restaurant Waste Analytics</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Loading State -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading dashboard...</p>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav" role="navigation">
+        <div class="nav-left">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">EKOTEK</span>
+            </div>
+        </div>
+        
+        <div class="nav-center">
+            <div class="nav-control">
+                <i class="fas fa-map-marker-alt"></i>
+                <select id="locationSelector" class="nav-select" aria-label="Select location">
+                    <option value="all">All Locations (12)</option>
+                    <option value="downtown">Downtown Flagship</option>
+                    <option value="westside">Westside Bistro</option>
+                    <option value="eastend">East End Eatery</option>
+                    <option value="midtown">Midtown Grille</option>
+                    <option value="harbor">Harbor View</option>
+                    <option value="airport">Airport Terminal</option>
+                    <option value="university">University District</option>
+                    <option value="oldtown">Old Town Cafe</option>
+                    <option value="riverside">Riverside Restaurant</option>
+                    <option value="hilltop">Hilltop Dining</option>
+                    <option value="lakeside">Lakeside Lounge</option>
+                    <option value="garden">Garden District</option>
+                </select>
+            </div>
+            
+            <div class="nav-control">
+                <i class="fas fa-calendar-alt"></i>
+                <select id="dateRangeSelector" class="nav-select" aria-label="Select date range">
+                    <option value="today">Today</option>
+                    <option value="7d">Last 7 Days</option>
+                    <option value="30d" selected>Last 30 Days</option>
+                    <option value="90d">Last 90 Days</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="nav-right">
+            <button class="nav-icon-btn" id="notificationsBtn" aria-label="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </button>
+            <button class="nav-icon-btn" id="helpBtn" aria-label="Help">
+                <i class="fas fa-question-circle"></i>
+            </button>
+            <button class="nav-icon-btn" id="settingsBtn" aria-label="Settings">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="user-menu">
+                <div class="user-avatar">JS</div>
+                <span class="user-name">John Smith</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <h3 class="sidebar-heading">Menu</h3>
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Executive Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="food-waste-analytics.html" class="nav-link">
+                            <i class="fas fa-utensils"></i>
+                            <span>Food Waste Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="recycling-compliance.html" class="nav-link">
+                            <i class="fas fa-recycle"></i>
+                            <span>Recycling & Compliance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="financial-impact.html" class="nav-link">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Financial Impact</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="predictions-ai.html" class="nav-link">
+                            <i class="fas fa-magic"></i>
+                            <span>Predictions & AI</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="settings.html" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-filters">
+                <h3 class="sidebar-heading">
+                    Quick Filters
+                    <button class="reset-filters-btn" id="resetFiltersBtn" style="display: none;">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </h3>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Waste Type</label>
+                    <div class="checkbox-group" id="wasteTypeFilters">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="wasteType" value="food" checked>
+                            <span>Food</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="wasteType" value="plastic" checked>
+                            <span>Plastic</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="wasteType" value="paper" checked>
+                            <span>Paper</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="wasteType" value="glass" checked>
+                            <span>Glass</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="wasteType" value="metal" checked>
+                            <span>Metal</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="wasteSourceFilter">Waste Source</label>
+                    <select id="wasteSourceFilter" class="filter-select">
+                        <option value="all">All Sources</option>
+                        <option value="prep">Prep</option>
+                        <option value="plate">Plate Waste</option>
+                        <option value="inventory">Inventory</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Time of Day</label>
+                    <div class="segmented-control" id="timeOfDayFilter">
+                        <button class="segment active" data-value="all">All Day</button>
+                        <button class="segment" data-value="breakfast">Breakfast</button>
+                        <button class="segment" data-value="lunch">Lunch</button>
+                        <button class="segment" data-value="dinner">Dinner</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Location Type</label>
+                    <div class="pill-group" id="locationTypeFilter">
+                        <button class="pill active" data-value="all">All</button>
+                        <button class="pill" data-value="fine">Fine Dining</button>
+                        <button class="pill" data-value="casual">Casual</button>
+                        <button class="pill" data-value="fast">Fast Casual</button>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn btn-primary" id="applyFiltersBtn">
+                        <i class="fas fa-check"></i> Apply Filters
+                    </button>
+                </div>
+
+                <div id="activeFiltersIndicator" class="active-filters-indicator" style="display: none;">
+                    <i class="fas fa-filter"></i>
+                    <span id="activeFiltersCount">Filters applied: 0</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <!-- Executive KPI Cards -->
+            <section class="kpi-section">
+                <div class="kpi-grid" id="kpiGrid">
+                    <!-- KPI Card 1: Total Waste -->
+                    <article class="kpi-card" data-kpi="totalWaste">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: var(--primary-light); color: var(--primary);">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                            <h3 class="kpi-title">Total Waste</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-number" data-target="2847">0</span>
+                                <span class="kpi-unit">kg</span>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-down"></i>
+                                <span class="trend-value">12.3%</span>
+                                <span class="trend-label">vs last month</span>
+                            </div>
+                        </div>
+                        <div class="kpi-chart">
+                            <canvas id="sparkline-totalWaste"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- KPI Card 2: Waste Cost -->
+                    <article class="kpi-card" data-kpi="wasteCost">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: #fef3c7; color: #f59e0b;">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <h3 class="kpi-title">Waste Cost</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-currency">$</span>
+                                <span class="kpi-number" data-target="18240">0</span>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-down"></i>
+                                <span class="trend-value">8.5%</span>
+                                <span class="trend-label">vs last month</span>
+                            </div>
+                        </div>
+                        <div class="kpi-chart">
+                            <canvas id="sparkline-wasteCost"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- KPI Card 3: Recycling Rate -->
+                    <article class="kpi-card" data-kpi="recyclingRate">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: #d1fae5; color: #10b981;">
+                                <i class="fas fa-recycle"></i>
+                            </div>
+                            <h3 class="kpi-title">Recycling Rate</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-number" data-target="67.8">0</span>
+                                <span class="kpi-unit">%</span>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span class="trend-value">4.2%</span>
+                                <span class="trend-label">vs last month</span>
+                            </div>
+                        </div>
+                        <div class="kpi-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%" data-target="67.8"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- KPI Card 4: Waste per Customer -->
+                    <article class="kpi-card" data-kpi="wastePerCustomer">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: #dbeafe; color: #3b82f6;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="kpi-title">Waste per Customer</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-number" data-target="0.42">0</span>
+                                <span class="kpi-unit">kg</span>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-down"></i>
+                                <span class="trend-value">6.1%</span>
+                                <span class="trend-label">vs last month</span>
+                            </div>
+                        </div>
+                        <div class="kpi-chart">
+                            <canvas id="sparkline-wastePerCustomer"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- KPI Card 5: CO₂ Impact -->
+                    <article class="kpi-card" data-kpi="co2Impact">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: #e0e7ff; color: #6366f1;">
+                                <i class="fas fa-earth-americas"></i>
+                            </div>
+                            <h3 class="kpi-title">CO₂ Impact</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-number" data-target="4230">0</span>
+                                <span class="kpi-unit">kg CO₂e</span>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-down"></i>
+                                <span class="trend-value">15.2%</span>
+                                <span class="trend-label">vs last month</span>
+                            </div>
+                        </div>
+                        <div class="kpi-chart">
+                            <canvas id="sparkline-co2Impact"></canvas>
+                        </div>
+                    </article>
+
+                    <!-- KPI Card 6: Goal Progress -->
+                    <article class="kpi-card" data-kpi="goalProgress">
+                        <div class="kpi-header">
+                            <div class="kpi-icon" style="background: #fce7f3; color: #ec4899;">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3 class="kpi-title">Goal Progress</h3>
+                        </div>
+                        <div class="kpi-body">
+                            <div class="kpi-value">
+                                <span class="kpi-number" data-target="78">0</span>
+                                <span class="kpi-unit">%</span>
+                            </div>
+                            <p class="kpi-label">On track to 20% reduction</p>
+                        </div>
+                        <div class="kpi-circular-progress">
+                            <svg viewBox="0 0 100 100" class="circular-chart">
+                                <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="circle-progress" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="0, 283" data-target="78"></circle>
+                            </svg>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Data Visualization Grid -->
+            <section class="charts-section">
+                <div class="charts-grid">
+                    <!-- Left Column -->
+                    <div class="chart-column">
+                        <!-- Waste Trend Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">30-Day Waste Trend</h3>
+                                    <p class="chart-subtitle">Total waste, food waste, and recyclables</p>
+                                </div>
+                                <button class="chart-action-btn" aria-label="Export chart">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="wasteTrendChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Top Wasted Dishes Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">Top 10 Wasted Dishes</h3>
+                                    <p class="chart-subtitle">By volume and cost</p>
+                                </div>
+                                <div class="chart-controls">
+                                    <button class="toggle-btn active" data-sort="volume">By Volume</button>
+                                    <button class="toggle-btn" data-sort="cost">By Cost</button>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="topDishesChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Waste by Source Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">Waste by Source</h3>
+                                    <p class="chart-subtitle">Distribution across operations</p>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="wasteSourceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="chart-column">
+                        <!-- Waste Composition Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">Waste Composition</h3>
+                                    <p class="chart-subtitle">Weekly breakdown by material type</p>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="compositionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- AI Predictions Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">AI Waste Prediction</h3>
+                                    <p class="chart-subtitle">7-day forecast with confidence intervals</p>
+                                </div>
+                                <div class="chart-controls">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="confidenceBandsToggle" checked>
+                                        <span class="slider"></span>
+                                        <span class="toggle-label">Confidence Bands</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="predictionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Location Performance Heatmap -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <h3 class="chart-title">Location Performance</h3>
+                                    <p class="chart-subtitle">12 restaurant locations</p>
+                                </div>
+                            </div>
+                            <div class="chart-body">
+                                <div class="heatmap-table" id="locationHeatmap">
+                                    <!-- Generated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Insights Table -->
+            <section class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div>
+                            <h3 class="table-title">Recent Waste Events</h3>
+                            <p class="table-subtitle">Real-time waste tracking</p>
+                        </div>
+                        <div class="table-actions">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="tableSearch" placeholder="Search events..." 
+                                       aria-label="Search waste events">
+                            </div>
+                            <button class="btn btn-secondary" id="exportTableBtn">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="wasteEventsTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-column="datetime">
+                                        Date/Time <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="location">
+                                        Location <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="wasteType">
+                                        Waste Type <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="source">
+                                        Source <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="item">
+                                        Item/Ingredient <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="amount">
+                                        Amount (kg) <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th class="sortable" data-column="cost">
+                                        Cost ($) <i class="fas fa-sort"></i>
+                                    </th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Generated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <div class="table-info">
+                            Showing <span id="showingStart">1</span>-<span id="showingEnd">20</span> 
+                            of <span id="totalRecords">487</span> events
+                        </div>
+                        <div class="pagination" id="pagination">
+                            <button class="pagination-btn" id="prevPageBtn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="pagination-numbers" id="paginationNumbers">
+                                <!-- Generated by JavaScript -->
+                            </div>
+                            <button class="pagination-btn" id="nextPageBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/kpis.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

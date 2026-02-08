@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Waste Analytics | EKOTEK Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <p>Loading Analytics...</p>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">EKOTEK</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <div class="nav-control">
+                <i class="fas fa-map-marker-alt"></i>
+                <select class="nav-select">
+                    <option value="all">All Locations (12)</option>
+                </select>
+            </div>
+            <div class="nav-control">
+                <i class="fas fa-calendar-alt"></i>
+                <select class="nav-select">
+                    <option value="30d" selected>Last 30 Days</option>
+                </select>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-icon-btn"><i class="fas fa-bell"></i><span class="badge">3</span></button>
+            <button class="nav-icon-btn"><i class="fas fa-question-circle"></i></button>
+            <button class="nav-icon-btn"><i class="fas fa-cog"></i></button>
+            <div class="user-menu">
+                <div class="user-avatar">JS</div>
+                <span class="user-name">John Smith</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <h3 class="sidebar-heading">Menu</h3>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Executive Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="food-waste-analytics.html" class="nav-link">
+                            <i class="fas fa-utensils"></i>
+                            <span>Food Waste Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="recycling-compliance.html" class="nav-link">
+                            <i class="fas fa-recycle"></i>
+                            <span>Recycling & Compliance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="financial-impact.html" class="nav-link">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Financial Impact</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="predictions-ai.html" class="nav-link">
+                            <i class="fas fa-magic"></i>
+                            <span>Predictions & AI</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="settings.html" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1 class="page-title">Food Waste Analytics</h1>
+                    <p class="page-subtitle">Ingredient-level tracking, portion optimization, and menu engineering insights</p>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </header>
+
+            <!-- KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card" data-kpi="food-waste">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--danger-light); color: var(--danger);">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Total Food Waste</h3>
+                            <span class="kpi-change positive">
+                                <i class="fas fa-arrow-down"></i> 12.3%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">2,135</span>
+                        <span class="kpi-unit">kg</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">This period</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-kpi="ingredient-waste">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--warning-light); color: var(--warning);">
+                            <i class="fas fa-carrot"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Top Wasted Ingredient</h3>
+                            <span class="kpi-change negative">
+                                <i class="fas fa-arrow-up"></i> 4.2%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">125</span>
+                        <span class="kpi-unit">kg Lettuce</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">28% waste rate</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-kpi="prep-waste">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--info-light); color: var(--info);">
+                            <i class="fas fa-knife-kitchen"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Pre-Consumer Waste</h3>
+                            <span class="kpi-change positive">
+                                <i class="fas fa-arrow-down"></i> 8.1%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">1,281</span>
+                        <span class="kpi-unit">kg</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">60% of total</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-kpi="plate-waste">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--primary-light); color: var(--primary);">
+                            <i class="fas fa-plate-wheat"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Plate Waste</h3>
+                            <span class="kpi-change positive">
+                                <i class="fas fa-arrow-down"></i> 15.7%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">854</span>
+                        <span class="kpi-unit">kg</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">40% of total</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-kpi="portion-savings">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--success-light); color: var(--success);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Optimization Savings</h3>
+                            <span class="kpi-change positive">
+                                <i class="fas fa-arrow-up"></i> 24.5%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">7,810</span>
+                        <span class="kpi-unit">$/month</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">Potential savings</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-kpi="dishes-optimized">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: var(--chart-2); color: white;">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="kpi-meta">
+                            <h3 class="kpi-title">Dishes Optimized</h3>
+                            <span class="kpi-change positive">
+                                <i class="fas fa-check"></i> On track
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-value">
+                        <span class="kpi-number">12</span>
+                        <span class="kpi-unit">/ 28 total</span>
+                    </div>
+                    <div class="kpi-footer">
+                        <span class="kpi-label">43% complete</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Row 1 -->
+            <section class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3 class="chart-title">Top Ingredient Waste</h3>
+                            <p class="chart-subtitle">By weight and cost impact</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ingredientWasteChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3 class="chart-title">Pre-Consumer Waste by Stage</h3>
+                            <p class="chart-subtitle">Where waste occurs in production</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="preConsumerChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Row 2 -->
+            <section class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3 class="chart-title">Waste by Meal Period</h3>
+                            <p class="chart-subtitle">Distribution across service times</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="mealPeriodChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3 class="chart-title">Waste by Day of Week</h3>
+                            <p class="chart-subtitle">Weekly patterns and trends</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dayOfWeekChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Portion Optimization Table -->
+            <section class="data-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Portion Optimization Recommendations</h2>
+                        <p class="section-subtitle">AI-powered portion size adjustments for maximum savings</p>
+                    </div>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="table-container">
+                        <table class="data-table" id="portionTable">
+                            <thead>
+                                <tr>
+                                    <th>Dish</th>
+                                    <th>Current</th>
+                                    <th>Recommended</th>
+                                    <th>Reduction</th>
+                                    <th>Monthly Savings</th>
+                                    <th>Confidence</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody id="portionTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Menu Engineering Matrix -->
+            <section class="data-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Menu Engineering Matrix</h2>
+                        <p class="section-subtitle">Strategic classification and action recommendations</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="table-container">
+                        <table class="data-table" id="menuEngineeringTable">
+                            <thead>
+                                <tr>
+                                    <th>Dish</th>
+                                    <th>Profitability</th>
+                                    <th>Popularity</th>
+                                    <th>Category</th>
+                                    <th>Waste Impact</th>
+                                    <th>Action</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody id="menuEngineeringTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plate Waste Analysis -->
+            <section class="data-section">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Plate Waste Analysis</h2>
+                        <p class="section-subtitle">Customer leftover patterns and root causes</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="table-container">
+                        <table class="data-table" id="plateWasteTable">
+                            <thead>
+                                <tr>
+                                    <th>Dish</th>
+                                    <th>Avg Waste</th>
+                                    <th>Orders</th>
+                                    <th>Waste Rate</th>
+                                    <th>Primary Reason</th>
+                                    <th>Savings Potential</th>
+                                </tr>
+                            </thead>
+                            <tbody id="plateWasteTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/food-waste-analytics.js"></script>
+</body>
+</html>
